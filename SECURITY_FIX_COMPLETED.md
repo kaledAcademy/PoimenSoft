@@ -17,9 +17,9 @@ Multiple documentation files containing **plaintext production credentials** wer
 3. ❌ `GUIA_PRUEBAS.md` - Login instructions with passwords
 
 **Exposed Information:**
-- User emails: `superadmin@poimensoft.com`, `pastor@poimensoft.com`, etc.
-- Password: `Admin123!` (all test accounts)
-- Production domain: `poimensoft-production.up.railway.app`
+- User emails: [REDACTED - 6 test accounts]
+- Password: [REDACTED] (all test accounts used same password)
+- Production domain: [REDACTED]
 - Database connection patterns
 - JWT secret structure
 
@@ -130,7 +130,7 @@ Test-Path GUIA_PRUEBAS.md
 railway run npm run change-passwords
 ```
 
-**Why:** The old password `Admin123!` was exposed in git history.
+**Why:** The old password [REDACTED] was exposed in git history.
 
 #### 2. 🔴 Rotate JWT Secrets
 
