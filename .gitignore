@@ -38,3 +38,11 @@ next-env.d.ts
 # prisma
 /prisma/migrations
 
+# security - validation and test reports with credentials
+RAILWAY_VALIDATION_REPORT.md
+RAILWAY_PLAN_STATUS.md
+GUIA_PRUEBAS.md
+SEED_DATA.md
+
+# keep only sanitized versions
+!*_SANITIZED.md
