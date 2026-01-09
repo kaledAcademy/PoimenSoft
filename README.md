@@ -114,32 +114,51 @@ El proyecto incluye un seed que crea usuarios de prueba para cada rol del sistem
 
 ### Credenciales de Acceso
 
-Todos los usuarios de prueba comparten la misma contraseña: **`Admin123!`**
+> **🔒 Nota de Seguridad:** Las credenciales de prueba son generadas por el script `prisma/seed.ts`. 
+> Para obtener las credenciales actuales, ejecuta el seed y consulta la salida en consola, o revisa el código fuente del seed.
 
-| Email | Rol | Descripción |
-|-------|-----|-------------|
-| `superadmin@poimensoft.com` | SUPERADMIN | Acceso total al sistema |
-| `pastor@poimensoft.com` | PASTOR | Gestión pastoral |
-| `supervisor@poimensoft.com` | SUPERVISOR | Supervisión de grupos |
-| `discipulador@poimensoft.com` | DISCIPULADOR | Gestión de discipulado |
-| `tesorero@poimensoft.com` | TESORERO | Gestión financiera |
-| `admin@poimensoft.com` | ADMINISTRATIVO | Gestión administrativa |
+El seed crea **6 usuarios de prueba**, uno para cada rol:
+
+| Rol | Descripción |
+|-----|-------------|
+| SUPERADMIN | Acceso total al sistema |
+| PASTOR | Gestión pastoral |
+| SUPERVISOR | Supervisión de grupos |
+| DISCIPULADOR | Gestión de discipulado |
+| TESORERO | Gestión financiera |
+| ADMINISTRATIVO | Gestión administrativa |
+
+**Para ver las credenciales generadas:**
+```bash
+# Ejecuta el seed y observa la salida en consola
+npm run db:seed
+
+# O revisa el código fuente
+cat prisma/seed.ts
+```
 
 ### Cómo probar el Dashboard
 
-1. **Inicia el servidor de desarrollo:**
+1. **Ejecuta el seed para crear usuarios de prueba:**
+   ```bash
+   npm run db:seed
+   ```
+   
+   El seed mostrará en consola las credenciales generadas.
+
+2. **Inicia el servidor de desarrollo:**
    ```bash
    npm run dev
    ```
 
-2. **Accede a la aplicación:**
+3. **Accede a la aplicación:**
    ```
    http://localhost:3000
    ```
 
-3. **Inicia sesión** con cualquiera de los usuarios de prueba listados arriba.
+4. **Inicia sesión** con las credenciales mostradas en el paso 1.
 
-4. **Explora las funcionalidades** según el rol del usuario:
+5. **Explora las funcionalidades** según el rol del usuario:
    - **SUPERADMIN**: Acceso completo a todas las funcionalidades
    - **PASTOR**: Dashboard pastoral, gestión de miembros
    - **SUPERVISOR**: Supervisión de grupos y actividades
