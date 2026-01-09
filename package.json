@@ -16,8 +16,7 @@
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
     "db:seed": "tsx prisma/seed.ts",
-    "install": "node scripts/install-wrapper.js",
-    "install:safe": "npm install --ignore-scripts && npm run db:generate"
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
