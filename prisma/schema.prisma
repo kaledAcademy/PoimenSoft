@@ -1,0 +1,124 @@
+// Schema de Prisma para POIMENSOFT
+// Migrado desde Amaxoft y adaptado según PRD de POIMENSOFT
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// MODELO USER - Autenticación
+// ============================================
+
+model User {
+  id                    String              @id @default(cuid())
+  email                 String              @unique
+  name                  String?
+  password              String?
+  role                  UserRole            @default(DISCIPULADOR)
+  customId              String              @unique
+  isActive              Boolean             @default(true)
+  emailVerified         DateTime?
+  image                 String?
+  profilePhoto          String?
+
+  // Consentimientos legales
+  acceptedDataPolicy    Boolean             @default(false)
+  acceptedMarketing     Boolean             @default(false)
+  acceptedTerms         Boolean             @default(false)
+  dataConsentDate       DateTime?
+  termsConsentDate      DateTime?
+
+  // OAuth (futuro)
+  googleId              String?             @unique
+
+  // Timestamps
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  // Relaciones
+  auditLogs             AuditLog[]
+  verificationCodes     VerificationCode[]
+
+  @@index([role, isActive])
+  @@index([email])
+  @@index([customId])
+  @@index([name])
+  @@index([googleId])
+  @@index([createdAt])
+  @@map("users")
+}
+
+model UserIdSequence {
+  id         String   @id @default(cuid())
+  rolePrefix String   @unique
+  lastNumber Int      @default(0)
+  updatedAt  DateTime @updatedAt
+
+  @@map("user_id_sequences")
+}
+
+model VerificationCode {
+  id          String              @id @default(cuid())
+  userId      String
+  code        String              @unique
+  purpose     String
+  expiresAt   DateTime
+  used        Boolean             @default(false)
+  sentVia     NotificationChannel
+  attempts    Int                 @default(0)
+  maxAttempts Int                 @default(3)
+  verifiedAt  DateTime?
+  ipAddress   String?
+  createdAt   DateTime            @default(now())
+  user        User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([code, used])
+  @@index([userId])
+  @@index([userId, used])
+  @@index([expiresAt])
+  @@index([purpose])
+  @@index([expiresAt, used])
+  @@map("verification_codes")
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  action     String
+  entityType String
+  entityId   String?
+  oldValue   Json?
+  newValue   Json?
+  ipAddress  String?
+  userAgent  String?
+  metadata   Json?
+  timestamp  DateTime @default(now())
+  user       User?    @relation(fields: [userId], references: [id])
+
+  @@index([userId, timestamp])
+  @@index([entityType, entityId])
+  @@index([timestamp])
+  @@map("audit_logs")
+}
+
+enum UserRole {
+  SUPERADMIN
+  PASTOR
+  SUPERVISOR
+  DISCIPULADOR
+  TESORERO
+  ADMINISTRATIVO
+}
+
+enum NotificationChannel {
+  EMAIL
+  WHATSAPP
+  SMS
+  IN_APP
+}
