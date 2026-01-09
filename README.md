@@ -45,6 +45,11 @@ npm run db:generate
 npm run db:push
 ```
 
+5. Pobla la base de datos con usuarios de prueba:
+```bash
+npm run db:seed
+```
+
 ### Desarrollo
 
 ```bash
@@ -73,14 +78,21 @@ Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 
 ## 🛠️ Scripts Disponibles
 
+### Desarrollo
 - `npm run dev` - Inicia el servidor de desarrollo
 - `npm run build` - Construye la aplicación para producción
 - `npm run start` - Inicia el servidor de producción
 - `npm run lint` - Ejecuta ESLint
+
+### Base de Datos
 - `npm run db:generate` - Genera el cliente de Prisma
 - `npm run db:push` - Sincroniza el schema con la base de datos
 - `npm run db:migrate` - Crea una nueva migración
-- `npm run db:studio` - Abre Prisma Studio
+- `npm run db:seed` - Pobla la BD con usuarios de prueba
+- `npm run db:studio` - Abre Prisma Studio (GUI para ver la BD)
+
+### Seguridad
+- `npm run change-passwords` - Cambia contraseñas de usuarios de prueba (producción)
 
 ## 📦 Agregar Componentes de shadcn/ui
 
@@ -96,9 +108,63 @@ npx shadcn-ui@latest add card
 npx shadcn-ui@latest add input
 ```
 
+## 👥 Usuarios de Prueba
+
+El proyecto incluye un seed que crea usuarios de prueba para cada rol del sistema. Estos usuarios se crean automáticamente al ejecutar `npm run db:seed`.
+
+### Credenciales de Acceso
+
+Todos los usuarios de prueba comparten la misma contraseña: **`Admin123!`**
+
+| Email | Rol | Descripción |
+|-------|-----|-------------|
+| `superadmin@poimensoft.com` | SUPERADMIN | Acceso total al sistema |
+| `pastor@poimensoft.com` | PASTOR | Gestión pastoral |
+| `supervisor@poimensoft.com` | SUPERVISOR | Supervisión de grupos |
+| `discipulador@poimensoft.com` | DISCIPULADOR | Gestión de discipulado |
+| `tesorero@poimensoft.com` | TESORERO | Gestión financiera |
+| `admin@poimensoft.com` | ADMINISTRATIVO | Gestión administrativa |
+
+### Cómo probar el Dashboard
+
+1. **Inicia el servidor de desarrollo:**
+   ```bash
+   npm run dev
+   ```
+
+2. **Accede a la aplicación:**
+   ```
+   http://localhost:3000
+   ```
+
+3. **Inicia sesión** con cualquiera de los usuarios de prueba listados arriba.
+
+4. **Explora las funcionalidades** según el rol del usuario:
+   - **SUPERADMIN**: Acceso completo a todas las funcionalidades
+   - **PASTOR**: Dashboard pastoral, gestión de miembros
+   - **SUPERVISOR**: Supervisión de grupos y actividades
+   - **DISCIPULADOR**: Seguimiento de discipulados
+   - **TESORERO**: Reportes financieros y transacciones
+   - **ADMINISTRATIVO**: Gestión administrativa general
+
+### Regenerar usuarios de prueba
+
+Si necesitas regenerar los usuarios de prueba (solo en desarrollo):
+
+```bash
+# Elimina la base de datos actual
+npm run db:push -- --force-reset
+
+# Vuelve a crear las tablas
+npm run db:push
+
+# Regenera los usuarios de prueba
+npm run db:seed
+```
+
 ## 🔧 Próximos Pasos
 
-- Configurar autenticación (NextAuth.js)
+- ✅ Configurar autenticación (NextAuth.js) - **COMPLETADO**
 - Agregar más modelos a Prisma
 - Crear más stores de Zustand según necesidad
 - Agregar más componentes de shadcn/ui
